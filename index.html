@@ -8,12 +8,12 @@
 <style>
 body{
 margin:0;
-font-family:Arial,sans-serif;
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
+font-family:Arial;
 background:linear-gradient(135deg,#ffd6e7,#fff);
 overflow:hidden;
 padding:20px;
@@ -21,19 +21,18 @@ padding:20px;
 
 .container{
 text-align:center;
-padding:25px;
 background:rgba(255,255,255,0.85);
+padding:30px;
 border-radius:25px;
 box-shadow:0 10px 30px rgba(0,0,0,0.1);
-position:relative;
-z-index:1;
 width:90%;
-max-width:650px;
+max-width:600px;
+position:relative;
 }
 
 h1{
 color:#d10047;
-margin-bottom:15px;
+font-size:30px;
 }
 
 p{
@@ -48,22 +47,27 @@ color:#d10047;
 font-weight:bold;
 }
 
-/* Envelope */
+.forever{
+margin-top:10px;
+font-size:28px;
+color:red;
+}
+
+/* ENVELOPE */
 .envelope{
 margin:30px auto 0;
 width:300px;
-height:210px;
+height:200px;
 position:relative;
 cursor:pointer;
-z-index:5;
 }
 
 .base{
 position:absolute;
 bottom:0;
 width:100%;
-height:150px;
-background:#fff;
+height:140px;
+background:white;
 border-radius:0 0 18px 18px;
 box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
@@ -72,7 +76,7 @@ box-shadow:0 8px 20px rgba(0,0,0,0.15);
 position:absolute;
 top:0;
 width:100%;
-height:130px;
+height:120px;
 background:#ffe1ec;
 clip-path:polygon(0 0,100% 0,50% 100%);
 transform-origin:top;
@@ -82,58 +86,87 @@ z-index:5;
 
 .sticker{
 position:absolute;
-top:70px;
+top:60px;
 left:50%;
 transform:translateX(-50%);
 background:#ff4f87;
-color:#fff;
+color:white;
 padding:8px 14px;
 border-radius:50px;
-font-size:22px;
+font-size:20px;
 z-index:6;
 }
 
-/* Letter */
+/* LETTER */
 .letter{
 position:absolute;
 bottom:10px;
 left:10px;
 width:280px;
-height:180px;
-background:#fff;
+height:170px;
+background:white;
 border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
 overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
 transition:1s;
 }
 
-/* Slider */
-.slider{
-position:relative;
-width:100%;
-height:100%;
+/* MESSAGE */
+.message{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:18px;
+color:#d10047;
+font-weight:bold;
+opacity:0;
+transition:1s;
+text-align:center;
+width:90%;
 }
 
-.slider img{
+/* ROSE */
+.rose{
 position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
+top:70%;
+left:50%;
+transform:translate(-50%,20px);
+font-size:35px;
 opacity:0;
 transition:1s;
 }
 
-.slider img.active{
-opacity:1;
-}
-
-/* open animation */
+/* OPEN ANIMATION */
 .open .flap{
 transform:rotateX(180deg);
 }
 
 .open .letter{
 transform:translateY(-110px);
+}
+
+.open .message{
+opacity:1;
+transform:translate(-50%,-60%);
+}
+
+.open .rose{
+opacity:1;
+transform:translate(-50%,-10px) scale(1.3);
+}
+
+/* FLOATING HEARTS */
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 8s linear infinite;
+opacity:0.7;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
 }
 
 </style>
@@ -143,33 +176,35 @@ transform:translateY(-110px);
 
 <div class="container">
 
-<h1>🍓 Together Forever 🍓</h1>
+<h1>💖 Forever Gift 💖</h1>
 
 <p>
 Love u ❤️<br>
-I hope u stay in my life forever<br>
-I promise to keep u happy always<br>
+I hope you stay in my life forever<br>
+I promise to keep you happy always<br>
 Forever ♾️
 </p>
 
 <div class="counter" id="counter"></div>
 
-<!-- Envelope -->
+<div class="forever">Forever ♾️</div>
+
+<!-- ENVELOPE -->
 <div class="envelope" onclick="openLetter()">
 
 <div class="flap"></div>
 <div class="base"></div>
-<div class="sticker">🍓</div>
+<div class="sticker">💌</div>
 
 <div class="letter">
-<div class="slider">
 
-<img src="./images/pic1.jpg" class="active">
-<img src="./images/pic2.jpg">
-<img src="./images/pic3.jpg">
-<img src="./images/pic4.jpg">
-
+<div class="message">
+I love you forever ❤️<br>
+You are my happiness 💖
 </div>
+
+<div class="rose">🌹</div>
+
 </div>
 
 </div>
@@ -178,49 +213,45 @@ Forever ♾️
 
 <script>
 
-/* Counter */
+/* COUNTER */
 function updateCounter(){
 const start = new Date("2025-05-11T22:52:00");
 const now = new Date();
 
 const diff = now - start;
 
-const days = Math.floor(diff / (1000*60*60*24));
-const hours = Math.floor((diff / (1000*60*60)) % 24);
-const mins = Math.floor((diff / (1000*60)) % 60);
-const secs = Math.floor((diff / 1000) % 60);
+const days = Math.floor(diff/(1000*60*60*24));
+const hours = Math.floor((diff/(1000*60*60))%24);
+const mins = Math.floor((diff/(1000*60))%60);
+const secs = Math.floor((diff/1000)%60);
 
 document.getElementById("counter").innerHTML =
-days + " days " + hours + " hrs " + mins + " mins " + secs + " secs ❤️";
+days+" days "+hours+" hrs "+mins+" mins "+secs+" secs ❤️";
 }
 
 updateCounter();
 setInterval(updateCounter,1000);
 
-/* Envelope */
-let opened=false;
-
+/* OPEN ENVELOPE */
 function openLetter(){
 document.querySelector(".envelope").classList.toggle("open");
-
-if(!opened){
-startSlider();
-opened=true;
-}
 }
 
-/* Slider */
-let index=0;
+/* FLOATING HEARTS */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
 
-function startSlider(){
-const imgs=document.querySelectorAll(".slider img");
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(5+Math.random()*5)+"s";
 
-setInterval(()=>{
-imgs[index].classList.remove("active");
-index=(index+1)%imgs.length;
-imgs[index].classList.add("active");
-},2000);
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),10000);
 }
+
+setInterval(createHeart,700);
 
 </script>
 
